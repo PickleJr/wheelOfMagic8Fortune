@@ -5,40 +5,28 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
-    mode: 'development',
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    resolve: {
-        alias: {
-            vue: 'vue/dist/vue.js'
-        }
-    },
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.scss$/,
                 use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                        }
-                    }
+                    'vue-style-loader',
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
             {
-                test: /\.vue$/,
-                loader: 'vue-loader'
+                test: /\.pug$/,
+                loader: 'pug-plain-loader'
             }
         ]
     },
