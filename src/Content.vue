@@ -36,6 +36,7 @@ export default {
                 fadeInUpBig: false,
                 fadeOutDownBig: false
             },
+            askButtonReady: true,
             animateWheel: {
                 hide: true,
                 animated: false,
@@ -57,15 +58,30 @@ export default {
     },
     watch: {
         inputQuestion(newQuestion, oldQuestion) {
-            if(oldQuestion.length === 0 && newQuestion.length > 0) {
+            if(oldQuestion.length === 0 && newQuestion.length > 0 && this.askButtonReady) {
                 this.animateAskButton.hide = false;
                 this.animateAskButton.animated = true;
                 this.animateAskButton.fadeInUpBig = true;
-            } else if(oldQuestion.length > 0 && newQuestion.length === 0) {
+                this.askButtonReady = false;
+            }
+            else if(oldQuestion.length === 0 && newQuestion.length > 0 && !this.askButtonReady) {
+                this.animateAskButton.hide = false;
                 this.animateAskButton.animated = false;
-                this.animateAskButton.fadeOutDownBig = false;
                 this.animateAskButton.fadeInUpBig = false;
-                this.animateAskButton.hide = true;
+                this.animateAskButton.fadeOutDownBig = false;
+                this.askButtonReady = true;
+            } else if(oldQuestion.length > 0 && newQuestion.length === 0) {
+                if(this.askButtonReady) {
+                    this.animateAskButton.animated = true;
+                    this.animateAskButton.fadeOutDownBig = true;
+                    this.askButtonReady = false;
+                } else {
+                    this.animateAskButton.animated = false;
+                    this.animateAskButton.fadeOutDownBig = false;
+                    this.animateAskButton.fadeInUpBig = false;
+                    this.animateAskButton.hide = true;
+                    this.askButtonReady = true;
+                }
                 this.animateWheel.hide = true;
                 this.animateWheel.animated = false;
                 this.animateWheel.fadeInUpBig = false;
@@ -109,18 +125,22 @@ export default {
         });
         this.wheelSpinning = false;
 
-        //document.querySelector("#askButton").addEventListener("animationend", this.askButtonAnimationStoped);
+        document.querySelector("#askButton").addEventListener("animationend", this.askButtonAnimationStoped);
         document.querySelector("#spinWheel").addEventListener("animationend", this.spinWheel);
     },
     methods: {
         askButtonAnimationStoped() {
-            if(this.animateAskButton.fadeInUpBig) {
-                this.animateAskButton.fadeInUpBig = false;
-                this.animateAskButton.animated = false;
-            } else if (this.animateAskButton.fadeOutDownBig) {
-                this.animateAskButton.animated = false;
-                this.animateAskButton.fadeOutDownBig = false;
-                this.animateAskButton.hide = true;
+            if(!this.askButtonReady) {
+                if(this.animateAskButton.fadeInUpBig) {
+                    this.animateAskButton.fadeInUpBig = false;
+                    this.animateAskButton.animated = false;
+                    this.askButtonReady = true;
+                } else if (this.animateAskButton.fadeOutDownBig) {
+                    this.animateAskButton.animated = false;
+                    this.animateAskButton.fadeOutDownBig = false;
+                    this.animateAskButton.hide = true;
+                    this.askButtonReady = true;
+                }
             }
         },
         spinWheel() {
