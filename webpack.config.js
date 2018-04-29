@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -32,9 +34,27 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin('dist'),
+        new CopyWebpackPlugin([
+            {
+                from: 'node_modules/materialize-css/dist/css/materialize.min.css',
+                to: 'css/'
+            },
+            {
+                from: 'node_modules/materialize-css/dist/js/materialize.min.js',
+                to: 'js/'
+            },
+            {
+                from: 'src/Winwheel.min.js',
+                to: 'js/'
+            },
+            {
+                from: 'node_modules/animate.css/animate.min.css',
+                to: 'css/'
+            }
+        ]),
         new VueLoaderPlugin(),
         new HtmlWebPackPlugin({
-            title: 'Vue',
+            title: 'Wheel of 8 Ball',
             template: require('html-webpack-template'),
             inject: false,
             appMountId: 'root',
@@ -49,6 +69,18 @@ module.exports = {
                 }
             ],
             mobile: true,
+            scripts: [
+                'js/materialize.min.js',
+                'js/Winwheel.min.js',
+                'http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'
+            ],
+            links: [
+                'https://fonts.googleapis.com/icon?family=Material+Icons'
+            ]
+        }),
+        new HtmlWebpackIncludeAssetsPlugin({
+            assets: ['css/materialize.min.css', 'css/animate.min.css'],
+            append: false
         })
     ]
 }

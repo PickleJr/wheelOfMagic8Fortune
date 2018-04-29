@@ -1,11 +1,11 @@
 import Vue from 'vue';
 
-import Hello from './Hello.vue';
+import App from './App.vue';
 
 new Vue({
     el: '#root',
-    template: '<Hello/>',
+    template: '<App/>',
     components: {
-        Hello
+        App
     }
 })
