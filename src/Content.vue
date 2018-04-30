@@ -3,7 +3,7 @@
     .row
         div(class="input-field col s12")
             i(class="material-icons prefix") question_answer
-            input(id="question" type="text" v-model="inputQuestion" class="validate")
+            input(id="question" v-on:keypress.enter="showWheel" type="text" v-model="inputQuestion" class="validate")
             label(for="question") Ask Wheel of 8 Ball a yes or no question
     .row
         div(class="col s12 center")
@@ -189,10 +189,12 @@ export default {
             }
         },
         showWheel() {
-            this.animateAskButton.disabled = true;
-            this.animateWheel.hide = false;
-            this.animateWheel.animated = true;
-            this.animateWheel.fadeInUpBig = true;
+            if(this.inputQuestion.length > 0){
+                this.animateAskButton.disabled = true;
+                this.animateWheel.hide = false;
+                this.animateWheel.animated = true;
+                this.animateWheel.fadeInUpBig = true;
+            }
         },
         alertPrize(indicatedSegment) {
             this.answer = indicatedSegment.text;
