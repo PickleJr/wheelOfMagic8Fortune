@@ -34,7 +34,8 @@ export default {
                 hide: true,
                 animated: false,
                 fadeInUpBig: false,
-                fadeOutDownBig: false
+                fadeOutDownBig: false,
+                disabled: false
             },
             askButtonReady: true,
             animateWheel: {
@@ -69,8 +70,10 @@ export default {
                 this.animateAskButton.animated = false;
                 this.animateAskButton.fadeInUpBig = false;
                 this.animateAskButton.fadeOutDownBig = false;
+                this.animateAskButton.disabled = false;
                 this.askButtonReady = true;
             } else if(oldQuestion.length > 0 && newQuestion.length === 0) {
+                this.animateAskButton.disabled = false;
                 if(this.askButtonReady) {
                     this.animateAskButton.animated = true;
                     this.animateAskButton.fadeOutDownBig = true;
@@ -186,6 +189,7 @@ export default {
             }
         },
         showWheel() {
+            this.animateAskButton.disabled = true;
             this.animateWheel.hide = false;
             this.animateWheel.animated = true;
             this.animateWheel.fadeInUpBig = true;
