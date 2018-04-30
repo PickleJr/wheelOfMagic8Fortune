@@ -15,10 +15,10 @@
         .center(v-bind:class="animateWheel" id="spinWheel")
             i(class="material-icons large") arrow_downward
             br
-            canvas(id="canvas" width="434" height="434") Canvas not supported, use another browser.
+            canvas(id="canvas" width="500" height="500") Canvas not supported, use another browser.
     .row
         .center(id="answer" v-bind:class="animateAnswer")
-            p.flow-text {{ answer }}
+            p.flow-text Magic 8 Wheel says, "{{ answer }}."
             br
             button(id="resetButton" v-on:click="resetQuestion" class="btn waves-effect waves-light btn-large") Ask another question!
 </template>
@@ -101,20 +101,32 @@ export default {
     },
     mounted() {
         this.theWheel = new Winwheel({
-            'numSegments': 8,
-            'outerRadius': 212,
-            'centerX': 217,
-            'centerY': 219,
-            'textFontSize': 28,
+            'numSegments': 20,
+            'outerRadius': 250,
+            'centerX': 250,
+            'centerY': 250,
+            'textFontSize': 16,
             'segments': [
-                {'fillStyle': '#eae56f', 'text': 'Prize 1'},
-                {'fillStyle': '#89f26e', 'text': 'Prize 2'},
-                {'fillStyle': '#7de6ef', 'text': 'Prize 3'},
-                {'fillStyle': '#e7706f', 'text': 'Prize 4'},
-                {'fillStyle': '#eae56f', 'text': 'Prize 5'},
-                {'fillStyle': '#89f26e', 'text': 'Prize 6'},
-                {'fillStyle': '#7de6ef', 'text': 'Prize 7'},
-                {'fillStyle': '#e7706f', 'text': 'Prize 8'},
+                {'fillStyle': '#eae56f', 'text': 'It is certain'},
+                {'fillStyle': '#89f26e', 'text': 'Reply hazy try again'},
+                {'fillStyle': '#7de6ef', 'text': 'It is decidedly so'},
+                {'fillStyle': '#e7706f', 'text': 'Don\'t count on it'},
+                {'fillStyle': '#eae56f', 'text': 'Ask again later'},
+                {'fillStyle': '#89f26e', 'text': 'Without a doubt'},
+                {'fillStyle': '#7de6ef', 'text': 'My reply is no'},
+                {'fillStyle': '#e7706f', 'text': 'Yes definitely'},
+                {'fillStyle': '#eae56f', 'text': 'Better not tell you now'},
+                {'fillStyle': '#89f26e', 'text': 'You may rely on it'},
+                {'fillStyle': '#7de6ef', 'text': 'My sources say no'},
+                {'fillStyle': '#e7706f', 'text': 'As I see it, yes'},
+                {'fillStyle': '#eae56f', 'text': 'Cannot predict'},
+                {'fillStyle': '#89f26e', 'text': 'Most likely'},
+                {'fillStyle': '#7de6ef', 'text': 'Outlook not so good'},
+                {'fillStyle': '#e7706f', 'text': 'Outlook good'},
+                {'fillStyle': '#eae56f', 'text': 'Concentrate and ask again'},
+                {'fillStyle': '#89f26e', 'text': 'Yes'},
+                {'fillStyle': '#7de6ef', 'text': 'Very doubtful'},
+                {'fillStyle': '#e7706f', 'text': 'Signs point to yes'},
             ],
             'animation': {
                 'type': 'spinToStop',
@@ -127,6 +139,15 @@ export default {
 
         document.querySelector("#askButton").addEventListener("animationend", this.askButtonAnimationStoped);
         document.querySelector("#spinWheel").addEventListener("animationend", this.spinWheel);
+
+        document.querySelector("#askButton").addEventListener("oAnimationEnd", this.askButtonAnimationStoped);
+        document.querySelector("#spinWheel").addEventListener("oAnimationEnd", this.spinWheel);
+
+        document.querySelector("#askButton").addEventListener("mozAnimationEnd", this.askButtonAnimationStoped);
+        document.querySelector("#spinWheel").addEventListener("mozAnimationEnd", this.spinWheel);
+
+        document.querySelector("#askButton").addEventListener("webkitAnimationEnd", this.askButtonAnimationStoped);
+        document.querySelector("#spinWheel").addEventListener("webkitAnimationEnd", this.spinWheel);
     },
     methods: {
         askButtonAnimationStoped() {
