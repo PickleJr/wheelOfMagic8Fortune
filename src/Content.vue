@@ -139,17 +139,28 @@ export default {
 
         document.querySelector("#askButton").addEventListener("animationend", this.askButtonAnimationStoped);
         document.querySelector("#spinWheel").addEventListener("animationend", this.spinWheel);
+        document.querySelector("#answer").addEventListener("animationend", this.scrollToAnswer);
 
         document.querySelector("#askButton").addEventListener("oAnimationEnd", this.askButtonAnimationStoped);
         document.querySelector("#spinWheel").addEventListener("oAnimationEnd", this.spinWheel);
+        document.querySelector("#answer").addEventListener("oAnimationEnd", this.scrollToAnswer);
 
         document.querySelector("#askButton").addEventListener("mozAnimationEnd", this.askButtonAnimationStoped);
         document.querySelector("#spinWheel").addEventListener("mozAnimationEnd", this.spinWheel);
+        document.querySelector("#answer").addEventListener("mozAnimationEnd", this.scrollToAnswer);
 
         document.querySelector("#askButton").addEventListener("webkitAnimationEnd", this.askButtonAnimationStoped);
         document.querySelector("#spinWheel").addEventListener("webkitAnimationEnd", this.spinWheel);
+        document.querySelector("#answer").addEventListener("webkitAnimationEnd", this.scrollToAnswer);
     },
     methods: {
+        scrollToAnswer() {
+            window.scroll({
+                top: document.body.scrollHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
+        },
         askButtonAnimationStoped() {
             if(!this.askButtonReady) {
                 if(this.animateAskButton.fadeInUpBig) {
